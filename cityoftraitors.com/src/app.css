@@ -1,0 +1,61 @@
+@font-face {
+    font-family: 'Goudy Medieval';
+    src: url('/assets/goudy_medieval_alternate.ttf') format('truetype');
+}
+
+:root {
+    --color-bg: #121212;
+    --color-surface: #1e1e1e;
+    --color-text: #d4d4d4;
+    --color-primary: #dcdcdc;
+    /* Colorless mana feel */
+    --color-secondary: #8a8a8a;
+    --color-accent: #c0a060;
+    /* Gold accent */
+    --font-main: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    --font-header: 'Goudy Medieval', serif;
+}
+
+body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-main);
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: var(--font-header);
+    color: var(--color-primary);
+    margin-top: 0;
+}
+
+a {
+    color: var(--color-accent);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+a:hover {
+    color: var(--color-primary);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--color-bg);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--color-secondary);
+    border-radius: 5px;
+}
