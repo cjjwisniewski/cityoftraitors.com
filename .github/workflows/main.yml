@@ -26,15 +26,16 @@ jobs:
     - uses: azure/login@v2
       with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+          allow-no-subscriptions: true
 
     - name: Upload to blob storage
-      uses: azure/CLI@v1
+      uses: azure/CLI@v2
       with:
         inlineScript: |
             az storage blob upload-batch --account-name cityoftraitorscom --auth-mode key -d '$web' -s ./cityoftraitors.com/build
 
     - name: Purge CDN endpoint
-      uses: azure/CLI@v1
+      uses: azure/CLI@v2
       with:
         inlineScript: |
            az cdn endpoint purge --content-paths  "/*" --profile-name "cityoftraitors-com-cdn-1" --name "cityoftraitors-com-cdn-1" --resource-group "cameron.wisniewski_rg_Windows_eastus2"
