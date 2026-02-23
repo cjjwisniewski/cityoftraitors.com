@@ -126,6 +126,15 @@
         padding: 0;
     }
 
+    .content :global(img) {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 2rem auto;
+        border-radius: 4px;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+    }
+
     .back-link {
         margin-top: 4rem;
         padding-top: 2rem;
