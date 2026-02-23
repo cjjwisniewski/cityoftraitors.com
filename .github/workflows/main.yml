@@ -38,7 +38,7 @@ jobs:
       uses: azure/CLI@v2
       with:
         inlineScript: |
-            az storage blob upload-batch --account-name cityoftraitorscom --auth-mode login -d '$web' -s ./cityoftraitors.com/build
+            az storage blob upload-batch --account-name cityoftraitorscom --auth-mode login -d '$web' -s ./cityoftraitors.com/build --overwrite
 
 
     - name: logout
