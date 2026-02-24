@@ -3,18 +3,18 @@
 </svelte:head>
 
 <div class="about-container">
-    <h1>About the City</h1>
+    <h1>Welcome to the City of Traitors!</h1>
 
     <section>
         <p>
-            City of Traitors is a personal blog and resource for Magic: The
-            Gathering enthusiasts. The name pays homage to the powerful land
-            card from the Exodus expansion, a card that represents power at a
-            cost—a fitting metaphor for many strategies in the game.
-        </p>
-        <p>
-            Here you will find tournament reports, deck lists, and analysis of
-            the eternal formats.
+            City of Traitors is my personal blog, mostly a place where I can
+            write tournament reports and talk about bad decks like the
+            MTGTheSource of old. I'll probably even have about the same amount
+            of people reading this stuff! Some of you reading this will be here
+            for that stuff, and the others will be here for Seeker - a cool tool
+            I designed to help track down hard to find Magic cards. If you know
+            me, and if you want an invite to it, message me and we'll figure it
+            out.
         </p>
     </section>
 </div>

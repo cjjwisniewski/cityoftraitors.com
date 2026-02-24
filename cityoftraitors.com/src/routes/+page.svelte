@@ -13,10 +13,7 @@
 <section class="hero">
     <div class="hero-content">
         <h1>City of Traitors</h1>
-        <p>
-            A sanctuary for Magic: The Gathering history, deck lists, and
-            tournament reports.
-        </p>
+        <p>The home for all things that tap for two colorless mana!</p>
     </div>
 </section>
 
