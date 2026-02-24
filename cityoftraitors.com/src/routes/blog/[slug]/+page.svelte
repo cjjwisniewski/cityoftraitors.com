@@ -1,5 +1,8 @@
 <script>
+    import { authors } from "$lib/authors.js";
     export let data;
+
+    $: authorInfo = data.author ? authors[data.author] : null;
 </script>
 
 <svelte:head>
@@ -11,12 +14,30 @@
         <h1>{data.title}</h1>
         <div class="meta">
             <span class="date">{new Date(data.date).toLocaleDateString()}</span>
+            {#if data.author}
+                <span class="separator">&bull;</span>
+                <span class="author">By {data.author}</span>
+            {/if}
         </div>
     </header>
 
     <div class="content">
         <svelte:component this={data.content} />
     </div>
+
+    {#if authorInfo}
+        <footer class="post-footer">
+            <section class="about-author">
+                <h3>About the Author</h3>
+                <div class="author-info">
+                    <p>
+                        <strong>{authorInfo.name}</strong>
+                        {authorInfo.bio}
+                    </p>
+                </div>
+            </section>
+        </footer>
+    {/if}
 
     <div class="back-link">
         <a href="/">&larr; Back to Chronicles</a>
@@ -51,6 +72,14 @@
         color: var(--color-accent);
         font-family: var(--font-header);
         font-size: 1.1rem;
+        display: flex;
+        justify-content: center;
+        gap: 0.8rem;
+        align-items: center;
+    }
+
+    .meta .separator {
+        opacity: 0.5;
     }
 
     .content {
@@ -145,6 +174,33 @@
     .back-link a {
         font-family: var(--font-header);
         font-size: 1.2rem;
+    }
+
+    .post-footer {
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid #444;
+    }
+
+    .about-author {
+        background: #1a1a1a;
+        padding: 2rem;
+        border-radius: 4px;
+        border: 1px solid #333;
+    }
+
+    .about-author h3 {
+        margin-top: 0;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
+        color: var(--color-accent);
+    }
+
+    .author-info p {
+        margin: 0;
+        font-size: 1rem;
+        color: #bbb;
+        line-height: 1.6;
     }
 
     @media (max-width: 600px) {

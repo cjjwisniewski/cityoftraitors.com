@@ -7,12 +7,13 @@ export const load = async ({ params }) => {
     }
 
     const post = await postResolver();
-    const { title, date } = post.metadata;
+    const { title, date, author } = post.metadata;
     const content = post.default;
 
     return {
         content,
         title,
-        date
+        date,
+        author
     };
 };
