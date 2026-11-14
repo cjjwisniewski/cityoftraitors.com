@@ -1,33 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
-  <defs>
-    <linearGradient id="sky" x1="32" y1="4" x2="32" y2="56" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#0b0b0d" />
-      <stop offset="70%" stop-color="#191612" />
-      <stop offset="100%" stop-color="#3b2c19" />
-    </linearGradient>
-    <clipPath id="frame">
-      <rect x="4" y="4" width="56" height="56" rx="11" />
-    </clipPath>
-  </defs>
   <rect width="64" height="64" rx="14" fill="#0b0b0d" />
-  <g clip-path="url(#frame)">
-    <rect x="4" y="4" width="56" height="56" fill="url(#sky)" />
-    <!-- Distant citadel spires -->
-    <path d="M25 32V20L28 16L31 20V32H25Z" fill="#231f1b" />
-    <path d="M35 32V17L38.5 12L42 17V32H35Z" fill="#2a241e" />
-    <!-- Main fortress silhouette -->
-    <path
-      d="M8 60V38H14V30H18V26H22V32H28V24H36V31H42V25H46V29H50V38H56V60H8Z"
-      fill="#101014"
-      stroke="#c9a66b"
-      stroke-opacity="0.55"
-      stroke-width="1.2"
-    />
-    <!-- Glowing citadel windows & arched gate -->
-    <rect x="30.5" y="29" width="3" height="4" rx="0.5" fill="#e4c58e" />
-    <rect x="19" y="34" width="2" height="3.5" rx="0.5" fill="#c9a66b" />
-    <rect x="43" y="33" width="2" height="3.5" rx="0.5" fill="#c9a66b" />
-    <path d="M28 60V48C28 45.8 29.8 44 32 44C34.2 44 36 45.8 36 48V60H28Z" fill="#c9a66b" fill-opacity="0.85" />
-  </g>
-  <rect x="3" y="3" width="58" height="58" rx="12" stroke="#c9a66b" stroke-opacity="0.5" stroke-width="1.5" />
+  <rect x="3" y="3" width="58" height="58" rx="11" stroke="#c9a66b" stroke-opacity="0.45" stroke-width="1.5" />
+  <path d="M32 13L49 32L32 51L15 32L32 13Z" fill="#16161b" stroke="#c9a66b" stroke-width="2.2" />
+  <path d="M32 21L41 32L32 43L23 32L32 21Z" stroke="#c9a66b" stroke-opacity="0.6" stroke-width="1.6" />
+  <circle cx="32" cy="32" r="2.75" fill="#f2ece1" />
 </svg>

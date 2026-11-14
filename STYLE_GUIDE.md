@@ -69,7 +69,7 @@ The `body` background layers two soft radial gradients over `#0b0b0d` (warm gold
 
 ## 5. Components & Motifs
 
-- **Favicon & Citadel Motifs**: `favicon.svg` renders a minimal *City of Traitors* fortress silhouette with a warm amber-gold horizon and arched gate. The header `.brand-crest` uses a geometric diamond emblem, echoed as a rotated diamond in the footer ornament and the Seeker card header.
+- **Brand Crest & Favicon (Nested Diamond Motif)**: Both the header `.brand-crest` and `favicon.svg` use the signature nested burnished-gold diamond emblem (`#16161b` fill, `#c9a66b` outer/inner strokes, and a `#f2ece1` ivory center point). This diamond geometry is echoed in the footer divider ornament and the Seeker card header (`.seeker-mark`).
 - **Sticky Header**: Frosted obsidian (`rgba(11, 11, 13, 0.78)` + `backdrop-filter: blur(16px)`), `1px` gold hairline bottom border, and pill-shaped nav items with active state highlighting.
 - **Hero Showcase**: Uses `/assets/city_of_traitors.png` behind a multi-stop radial/linear vignette, framed by an inset hairline border with corner-bracket accents (`.corner`).
 - **Buttons**:
