@@ -81,6 +81,11 @@
 			<p class="copyright">
 				&copy; {new Date().getFullYear()} City of Traitors &middot; Tap for two colorless.
 			</p>
+			<p class="footer-links">
+				<a href="https://pittimps.com" target="_blank" rel="noopener noreferrer">Pitt Imps</a>
+				<span aria-hidden="true">&middot;</span>
+				<a href="https://undo.is" target="_blank" rel="noopener noreferrer">undo.is</a>
+			</p>
 			<p class="disclaimer">
 				Magic: The Gathering is a trademark of Wizards of the Coast. This site is not affiliated
 				with Wizards of the Coast.
@@ -249,6 +254,27 @@
 		margin: 0;
 		font-size: 0.875rem;
 		color: var(--color-text-muted);
+	}
+
+	.footer-links {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 0.55rem;
+		margin: 0.4rem 0 0;
+		font-family: var(--font-sans);
+		font-size: 0.82rem;
+		color: var(--color-text-muted);
+	}
+
+	.footer-links a {
+		color: var(--color-text-muted);
+		text-decoration: none;
+		transition: color 0.2s ease;
+	}
+
+	.footer-links a:hover {
+		color: var(--color-accent-bright);
 	}
 
 	.disclaimer {
