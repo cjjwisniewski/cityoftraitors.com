@@ -3,8 +3,28 @@
 	import favicon from '$lib/assets/favicon.svg';
 	import '../app.css';
 
+	const DISCORD_INVITE_URL = 'https://discord.gg/a5Kyrfekxd';
+	let showDiscordModal = false;
+
 	$: pathname = $page.url.pathname;
+
+	function openDiscordModal(event) {
+		event.preventDefault();
+		showDiscordModal = true;
+	}
+
+	function closeDiscordModal() {
+		showDiscordModal = false;
+	}
+
+	function handleWindowKeydown(event) {
+		if (event.key === 'Escape' && showDiscordModal) {
+			closeDiscordModal();
+		}
+	}
 </script>
+
+<svelte:window on:keydown={handleWindowKeydown} />
 
 <svelte:head>
 	<link rel="icon" type="image/svg+xml" href={favicon} />
@@ -63,6 +83,15 @@
 						/>
 					</svg>
 				</a>
+				<a
+					href={DISCORD_INVITE_URL}
+					class="external-link"
+					target="_blank"
+					rel="noopener noreferrer"
+					on:click={openDiscordModal}
+				>
+					<span>Discord</span>
+				</a>
 			</nav>
 		</div>
 	</header>
@@ -82,6 +111,13 @@
 				&copy; {new Date().getFullYear()} City of Traitors &middot; Tap for two colorless.
 			</p>
 			<p class="footer-links">
+				<a
+					href={DISCORD_INVITE_URL}
+					target="_blank"
+					rel="noopener noreferrer"
+					on:click={openDiscordModal}
+				>Discord</a>
+				<span aria-hidden="true">&middot;</span>
 				<a href="https://pittimps.com" target="_blank" rel="noopener noreferrer">Pitt Imps</a>
 				<span aria-hidden="true">&middot;</span>
 				<a href="https://undo.is" target="_blank" rel="noopener noreferrer">undo.is</a>
@@ -93,6 +129,51 @@
 		</div>
 	</footer>
 </div>
+
+{#if showDiscordModal}
+	<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+	<div
+		class="modal-backdrop"
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="cot-discord-title"
+		on:click={(e) => {
+			if (e.target === e.currentTarget) closeDiscordModal();
+		}}
+	>
+		<div class="modal-card">
+			<button
+				type="button"
+				class="modal-close"
+				aria-label="Close dialog"
+				on:click={closeDiscordModal}
+			>
+				&times;
+			</button>
+			<span class="modal-eyebrow">Temporary Invite</span>
+			<h2 id="cot-discord-title">Join the City of Traitors Discord</h2>
+			<p class="modal-body">
+				This link is a <strong>temporary invite</strong> to the City of Traitors Discord server.
+				Once you arrive, please <strong>select a role</strong> in the server so your membership
+				sticks permanently.
+			</p>
+			<div class="modal-actions">
+				<button type="button" class="modal-btn modal-btn-secondary" on:click={closeDiscordModal}>
+					Cancel
+				</button>
+				<a
+					href={DISCORD_INVITE_URL}
+					class="modal-btn modal-btn-primary"
+					target="_blank"
+					rel="noopener noreferrer"
+					on:click={closeDiscordModal}
+				>
+					Continue to Discord
+				</a>
+			</div>
+		</div>
+	</div>
+{/if}
 
 <style>
 	.app-container {
@@ -277,6 +358,130 @@
 		color: var(--color-accent-bright);
 	}
 
+	.modal-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 300;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1.25rem;
+		background: rgba(6, 6, 8, 0.8);
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+	}
+
+	.modal-card {
+		position: relative;
+		width: 100%;
+		max-width: 460px;
+		padding: 1.85rem;
+		border-radius: var(--radius-lg);
+		background: linear-gradient(180deg, var(--color-surface) 0%, var(--color-bg-elevated) 100%);
+		border: 1px solid var(--color-border-strong);
+		box-shadow:
+			inset 0 1px 0 rgba(255, 255, 255, 0.05),
+			0 24px 60px rgba(0, 0, 0, 0.75);
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.modal-close {
+		position: absolute;
+		top: 0.85rem;
+		right: 0.85rem;
+		width: 36px;
+		height: 36px;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		background: transparent;
+		border: 1px solid transparent;
+		border-radius: var(--radius-sm);
+		color: var(--color-text-muted);
+		font-size: 1.35rem;
+		line-height: 1;
+		cursor: pointer;
+		transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+	}
+
+	.modal-close:hover {
+		color: var(--color-primary);
+		background: rgba(255, 255, 255, 0.05);
+		border-color: var(--color-border);
+	}
+
+	.modal-eyebrow {
+		font-family: var(--font-mono);
+		font-size: 0.74rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		color: var(--color-accent);
+	}
+
+	.modal-card h2 {
+		margin: 0;
+		font-size: 1.55rem;
+		color: var(--color-primary);
+	}
+
+	.modal-body {
+		margin: 0;
+		font-family: var(--font-sans);
+		font-size: 0.96rem;
+		line-height: 1.65;
+		color: var(--color-text);
+	}
+
+	.modal-body strong {
+		color: var(--color-primary);
+	}
+
+	.modal-actions {
+		display: flex;
+		justify-content: flex-end;
+		gap: 0.75rem;
+		margin-top: 0.5rem;
+	}
+
+	.modal-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.65rem 1.2rem;
+		border-radius: var(--radius-sm);
+		font-family: var(--font-sans);
+		font-size: 0.9rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+	}
+
+	.modal-btn-primary {
+		background: var(--color-accent);
+		color: #110f0b;
+		border: 1px solid var(--color-accent);
+	}
+
+	.modal-btn-primary:hover {
+		background: var(--color-accent-bright);
+		border-color: var(--color-accent-bright);
+		color: #110f0b;
+	}
+
+	.modal-btn-secondary {
+		background: rgba(18, 18, 22, 0.78);
+		color: var(--color-primary);
+		border: 1px solid var(--color-border-strong);
+	}
+
+	.modal-btn-secondary:hover {
+		background: var(--color-surface-hover);
+		border-color: var(--color-accent);
+	}
+
 	.disclaimer {
 		font-size: 0.78rem;
 		margin: 0.45rem 0 0;
@@ -303,6 +508,19 @@
 			display: inline-flex;
 			align-items: center;
 			padding: 0 0.25rem;
+		}
+
+		.modal-card {
+			padding: 1.4rem;
+		}
+
+		.modal-actions {
+			flex-direction: column-reverse;
+		}
+
+		.modal-btn {
+			width: 100%;
+			min-height: 44px;
 		}
 
 		main {
