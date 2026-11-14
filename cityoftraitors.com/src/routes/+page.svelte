@@ -24,11 +24,6 @@
 	</div>
 
 	<div class="hero-content">
-		<div class="eyebrow">
-			<span class="mana-pip" aria-hidden="true">2</span>
-			<span>Old Magic &middot; Sol Land Chronicles</span>
-		</div>
-
 		<h1>City of Traitors</h1>
 		<p class="hero-subtitle">
 			Tournament reports, rogue brews, and dispatches from the home for all things that tap for two
@@ -171,38 +166,6 @@
 		z-index: 1;
 		text-align: center;
 		max-width: 660px;
-	}
-
-	.eyebrow {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.55rem;
-		padding: 0.35rem 0.85rem;
-		border-radius: 999px;
-		background: rgba(11, 11, 13, 0.72);
-		border: 1px solid var(--color-border);
-		backdrop-filter: blur(8px);
-		font-family: var(--font-mono);
-		font-size: 0.74rem;
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--color-accent-bright);
-		margin-bottom: 1.25rem;
-	}
-
-	.mana-pip {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 18px;
-		height: 18px;
-		border-radius: 50%;
-		background: rgba(201, 166, 107, 0.2);
-		border: 1px solid var(--color-accent);
-		color: var(--color-primary);
-		font-size: 0.7rem;
-		font-weight: 600;
-		line-height: 1;
 	}
 
 	h1 {

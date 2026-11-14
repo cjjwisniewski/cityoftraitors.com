@@ -27,7 +27,7 @@
 
 	<aside class="seeker-card">
 		<div class="seeker-header">
-			<span class="mana-pip" aria-hidden="true">2</span>
+			<span class="seeker-mark" aria-hidden="true"></span>
 			<h2>Seeker</h2>
 		</div>
 		<p>
@@ -114,19 +114,13 @@
 		gap: 0.75rem;
 	}
 
-	.mana-pip {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 26px;
-		height: 26px;
-		border-radius: 50%;
+	.seeker-mark {
+		width: 10px;
+		height: 10px;
+		transform: rotate(45deg);
+		border: 1.5px solid var(--color-accent);
 		background: var(--color-accent-dim);
-		border: 1px solid var(--color-accent);
-		color: var(--color-primary);
-		font-family: var(--font-mono);
-		font-size: 0.82rem;
-		font-weight: 600;
+		flex-shrink: 0;
 	}
 
 	.seeker-card h2 {

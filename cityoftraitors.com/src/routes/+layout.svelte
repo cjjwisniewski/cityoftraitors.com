@@ -14,14 +14,21 @@
 	<header class="site-header">
 		<div class="header-content">
 			<a href="/" class="brand" aria-label="City of Traitors Home">
-				<span class="mana-crest" aria-hidden="true">
+				<span class="brand-crest" aria-hidden="true">
 					<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-						<circle cx="16" cy="16" r="14" fill="#18181e" stroke="currentColor" stroke-width="1.6" />
-						<circle cx="16" cy="16" r="11" stroke="currentColor" stroke-opacity="0.28" stroke-width="0.75" />
 						<path
-							d="M12.2 12.1C12.2 10.1 13.8 8.8 16.1 8.8C18.4 8.8 20 10.1 20 12C20 13.7 19.1 14.8 17.1 16.5L14.2 19.1H20.2V21.2H11.7V19.4L15.5 15.8C17.1 14.3 17.7 13.5 17.7 12.2C17.7 11.1 17 10.5 16 10.5C14.9 10.5 14.2 11.2 14.1 12.4H12.2V12.1Z"
-							fill="#f2ece1"
+							d="M16 3L28 16L16 29L4 16L16 3Z"
+							fill="#16161b"
+							stroke="currentColor"
+							stroke-width="1.5"
 						/>
+						<path
+							d="M16 8.5L22.5 16L16 23.5L9.5 16L16 8.5Z"
+							stroke="currentColor"
+							stroke-opacity="0.55"
+							stroke-width="1.1"
+						/>
+						<circle cx="16" cy="16" r="1.75" fill="#f2ece1" />
 					</svg>
 				</span>
 				<span class="brand-text">City of Traitors</span>
@@ -120,20 +127,20 @@
 		color: var(--color-accent-bright);
 	}
 
-	.mana-crest {
-		width: 30px;
-		height: 30px;
+	.brand-crest {
+		width: 28px;
+		height: 28px;
 		display: inline-flex;
 		color: var(--color-accent);
 		flex-shrink: 0;
 		transition: transform 0.25s ease;
 	}
 
-	.brand:hover .mana-crest {
-		transform: rotate(-8deg) scale(1.05);
+	.brand:hover .brand-crest {
+		transform: rotate(45deg) scale(1.04);
 	}
 
-	.mana-crest svg {
+	.brand-crest svg {
 		width: 100%;
 		height: 100%;
 	}
