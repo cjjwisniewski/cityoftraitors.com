@@ -35,7 +35,13 @@
 	<title>{data.title} - City of Traitors</title>
 	{#if data.description}
 		<meta name="description" content={data.description} />
+		<meta property="og:description" content={data.description} />
 	{/if}
+	<meta property="og:title" content={`${data.title} - City of Traitors`} />
+	<meta property="og:type" content="article" />
+	<meta property="og:image" content="https://cityoftraitors.com/assets/city_of_traitors.png" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:image" content="https://cityoftraitors.com/assets/city_of_traitors.png" />
 </svelte:head>
 
 <div class="progress-track" aria-hidden="true">
@@ -62,6 +68,13 @@
 		<h1>{data.title}</h1>
 		{#if data.description}
 			<p class="lead">{data.description}</p>
+		{/if}
+		{#if data.tags?.length}
+			<div class="post-tags">
+				{#each data.tags as tag}
+					<span class="post-tag">{tag}</span>
+				{/each}
+			</div>
 		{/if}
 	</header>
 
@@ -174,6 +187,24 @@
 		font-style: italic;
 		color: var(--color-text-muted);
 		line-height: 1.5;
+	}
+
+	.post-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+		margin-top: 1.15rem;
+	}
+
+	.post-tag {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.03em;
+		color: var(--color-accent);
+		background: var(--color-accent-dim);
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		padding: 0.18rem 0.6rem;
 	}
 
 	.content {

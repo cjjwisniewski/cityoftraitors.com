@@ -7,6 +7,7 @@ import { estimateReadingTime } from '$lib/utils/format.js';
  *     date: string;
  *     description?: string;
  *     author?: string;
+ *     tags?: string[];
  *   };
  *   default: import('svelte').Component;
  * }} MarkdownModule
@@ -29,7 +30,7 @@ export const load = async ({ params }) => {
 
 	const post = /** @type {MarkdownModule} */ (await postResolver());
 	const raw = rawPosts[key] ? String(await rawPosts[key]()) : '';
-	const { title, date, author, description } = post.metadata;
+	const { title, date, author, description, tags } = post.metadata;
 	const content = post.default;
 
 	return {
@@ -38,6 +39,7 @@ export const load = async ({ params }) => {
 		date,
 		author,
 		description,
+		tags: Array.isArray(tags) ? tags : [],
 		readingTime: estimateReadingTime(raw)
 	};
 };

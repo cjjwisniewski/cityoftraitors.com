@@ -28,6 +28,7 @@
 
 <svelte:head>
 	<link rel="icon" type="image/svg+xml" href={favicon} />
+	<link rel="alternate" type="application/rss+xml" title="City of Traitors RSS" href="/rss.xml" />
 </svelte:head>
 
 <div class="app-container">
@@ -117,6 +118,8 @@
 					rel="noopener noreferrer"
 					on:click={openDiscordModal}
 				>Discord</a>
+				<span aria-hidden="true">&middot;</span>
+				<a href="/rss.xml" target="_blank" rel="noopener noreferrer">RSS</a>
 				<span aria-hidden="true">&middot;</span>
 				<a href="https://pittimps.com" target="_blank" rel="noopener noreferrer">Pitt Imps</a>
 				<span aria-hidden="true">&middot;</span>

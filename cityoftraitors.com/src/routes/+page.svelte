@@ -3,7 +3,15 @@
 
 	export let data;
 
+	let selectedTag = null;
+
 	$: latestPost = data.posts?.[0] ?? null;
+	$: allTags = Array.from(
+		new Set((data.posts ?? []).flatMap((post) => post.meta?.tags ?? []))
+	);
+	$: filteredPosts = selectedTag
+		? (data.posts ?? []).filter((post) => (post.meta?.tags ?? []).includes(selectedTag))
+		: data.posts ?? [];
 </script>
 
 <svelte:head>
@@ -12,6 +20,16 @@
 		name="description"
 		content="A Magic: The Gathering blog focusing on old-frame formats, Premodern, Legacy deck lists, and tournament reports."
 	/>
+	<meta property="og:title" content="City of Traitors" />
+	<meta
+		property="og:description"
+		content="Tournament reports, rogue brews, and dispatches from the home for all things that tap for two colorless mana."
+	/>
+	<meta property="og:type" content="website" />
+	<meta property="og:url" content="https://cityoftraitors.com/" />
+	<meta property="og:image" content="https://cityoftraitors.com/assets/city_of_traitors.png" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:image" content="https://cityoftraitors.com/assets/city_of_traitors.png" />
 </svelte:head>
 
 <section class="hero">
@@ -54,13 +72,36 @@
 	<div class="section-header">
 		<div class="section-title-group">
 			<h2 id="chronicles-heading">Chronicles</h2>
-			<span class="count-pill">{data.posts.length} {data.posts.length === 1 ? 'entry' : 'entries'}</span>
+			<span class="count-pill">{filteredPosts.length} {filteredPosts.length === 1 ? 'entry' : 'entries'}</span>
 		</div>
 		<p class="section-caption">Premodern, Legacy &amp; questionable Sol-land decisions</p>
 	</div>
 
+	{#if allTags.length > 0}
+		<div class="tag-filter-bar" role="group" aria-label="Filter chronicles by tag">
+			<button
+				type="button"
+				class="filter-pill"
+				class:active={selectedTag === null}
+				on:click={() => (selectedTag = null)}
+			>
+				All
+			</button>
+			{#each allTags as tag}
+				<button
+					type="button"
+					class="filter-pill"
+					class:active={selectedTag === tag}
+					on:click={() => (selectedTag = selectedTag === tag ? null : tag)}
+				>
+					{tag}
+				</button>
+			{/each}
+		</div>
+	{/if}
+
 	<div class="posts">
-		{#each data.posts as post}
+		{#each filteredPosts as post}
 			<article class="post-card">
 				<a href={post.path} class="post-link">
 					<div class="post-meta">
@@ -77,6 +118,14 @@
 
 					<h3>{post.meta.title}</h3>
 					<p class="post-description">{post.meta.description}</p>
+
+					{#if post.meta.tags?.length}
+						<div class="post-tags">
+							{#each post.meta.tags as tag}
+								<span class="post-tag">{tag}</span>
+							{/each}
+						</div>
+					{/if}
 
 					<span class="read-more">
 						<span>Read Chronicle</span>
@@ -287,6 +336,46 @@
 		color: var(--color-text-muted);
 	}
 
+	.tag-filter-bar {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.filter-pill {
+		font-family: var(--font-mono);
+		font-size: 0.78rem;
+		letter-spacing: 0.03em;
+		color: var(--color-text-muted);
+		background: var(--color-surface);
+		border: 1px solid var(--color-border-subtle);
+		border-radius: 999px;
+		padding: 0.35rem 0.85rem;
+		cursor: pointer;
+		transition:
+			color 0.2s ease,
+			background-color 0.2s ease,
+			border-color 0.2s ease;
+	}
+
+	.filter-pill:hover {
+		color: var(--color-accent-bright);
+		border-color: var(--color-border-strong);
+		background: var(--color-surface-hover);
+	}
+
+	.filter-pill.active {
+		color: var(--color-accent-bright);
+		background: var(--color-accent-dim);
+		border-color: var(--color-accent);
+	}
+
+	.filter-pill:focus-visible {
+		outline: 2px solid var(--color-accent);
+		outline-offset: 2px;
+	}
+
 	.posts {
 		display: grid;
 		gap: 1.25rem;
@@ -362,6 +451,24 @@
 		line-height: 1.6;
 	}
 
+	.post-tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin-bottom: 1.15rem;
+	}
+
+	.post-tag {
+		font-family: var(--font-mono);
+		font-size: 0.72rem;
+		letter-spacing: 0.03em;
+		color: var(--color-accent);
+		background: var(--color-accent-dim);
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		padding: 0.16rem 0.55rem;
+	}
+
 	.read-more {
 		display: inline-flex;
 		align-items: center;
@@ -390,6 +497,12 @@
 
 		.hero-frame {
 			inset: 8px;
+		}
+
+		.filter-pill {
+			min-height: 44px;
+			display: inline-flex;
+			align-items: center;
 		}
 
 		.post-link {

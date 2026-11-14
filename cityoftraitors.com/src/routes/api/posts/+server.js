@@ -8,6 +8,7 @@ import { estimateReadingTime } from '$lib/utils/format.js';
  *     date: string;
  *     description?: string;
  *     author?: string;
+ *     tags?: string[];
  *   };
  * }} MarkdownPost
  */
@@ -32,7 +33,10 @@ export const GET = async () => {
 			const slug = filename.slice(0, -3);
 
 			return {
-				meta: metadata,
+				meta: {
+					...metadata,
+					tags: Array.isArray(metadata.tags) ? metadata.tags.map(String) : []
+				},
 				path: `/blog/${slug}`,
 				readingTime: estimateReadingTime(raw)
 			};
