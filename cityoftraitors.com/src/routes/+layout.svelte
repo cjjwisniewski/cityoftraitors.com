@@ -293,8 +293,16 @@
 		}
 
 		nav a {
-			padding: 0.4rem 0.65rem;
+			min-height: 44px;
+			padding: 0.5rem 0.65rem;
 			font-size: 0.85rem;
+		}
+
+		.footer-links a {
+			min-height: 44px;
+			display: inline-flex;
+			align-items: center;
+			padding: 0 0.25rem;
 		}
 
 		main {
