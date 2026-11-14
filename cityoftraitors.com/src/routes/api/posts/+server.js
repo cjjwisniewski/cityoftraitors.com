@@ -1,26 +1,47 @@
 import { json } from '@sveltejs/kit';
+import { estimateReadingTime } from '$lib/utils/format.js';
+
+/**
+ * @typedef {{
+ *   metadata: {
+ *     title: string;
+ *     date: string;
+ *     description?: string;
+ *     author?: string;
+ *   };
+ * }} MarkdownPost
+ */
 
 export const prerender = true;
 
 export const GET = async () => {
-    const allPostFiles = import.meta.glob('/src/lib/posts/*.md');
-    const iterablePostFiles = Object.entries(allPostFiles);
+	const allPostFiles = import.meta.glob('/src/lib/posts/*.md');
+	const rawPostFiles = import.meta.glob('/src/lib/posts/*.md', {
+		query: '?raw',
+		import: 'default'
+	});
 
-    const allPosts = await Promise.all(
-        iterablePostFiles.map(async ([path, resolver]) => {
-            const { metadata } = await resolver();
-            const slug = path.split('/').pop().slice(0, -3);
+	const iterablePostFiles = Object.entries(allPostFiles);
 
-            return {
-                meta: metadata,
-                path: `/blog/${slug}`
-            };
-        })
-    );
+	const allPosts = await Promise.all(
+		iterablePostFiles.map(async ([path, resolver]) => {
+			const { metadata } = /** @type {MarkdownPost} */ (await resolver());
+			const rawResolver = rawPostFiles[path];
+			const raw = rawResolver ? String(await rawResolver()) : '';
+			const filename = path.split('/').pop() ?? '';
+			const slug = filename.slice(0, -3);
 
-    const sortedPosts = allPosts.sort((a, b) => {
-        return new Date(b.meta.date) - new Date(a.meta.date);
-    });
+			return {
+				meta: metadata,
+				path: `/blog/${slug}`,
+				readingTime: estimateReadingTime(raw)
+			};
+		})
+	);
 
-    return json(sortedPosts);
+	const sortedPosts = allPosts.sort((a, b) => {
+		return new Date(b.meta.date).getTime() - new Date(a.meta.date).getTime();
+	});
+
+	return json(sortedPosts);
 };

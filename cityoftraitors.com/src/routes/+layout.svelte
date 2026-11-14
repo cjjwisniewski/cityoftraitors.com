@@ -1,14 +1,61 @@
 <script>
-	import "../app.css";
+	import { page } from '$app/stores';
+	import favicon from '$lib/assets/favicon.svg';
+	import '../app.css';
+
+	$: pathname = $page.url.pathname;
 </script>
 
+<svelte:head>
+	<link rel="icon" type="image/svg+xml" href={favicon} />
+</svelte:head>
+
 <div class="app-container">
-	<header>
+	<header class="site-header">
 		<div class="header-content">
-			<a href="/" class="brand">City of Traitors</a>
-			<nav>
-				<a href="https://seeker.cityoftraitors.com/">Seeker</a>
-				<a href="/about">About</a>
+			<a href="/" class="brand" aria-label="City of Traitors Home">
+				<span class="mana-crest" aria-hidden="true">
+					<svg viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+						<circle cx="16" cy="16" r="14" fill="#18181e" stroke="currentColor" stroke-width="1.6" />
+						<circle cx="16" cy="16" r="11" stroke="currentColor" stroke-opacity="0.28" stroke-width="0.75" />
+						<path
+							d="M12.2 12.1C12.2 10.1 13.8 8.8 16.1 8.8C18.4 8.8 20 10.1 20 12C20 13.7 19.1 14.8 17.1 16.5L14.2 19.1H20.2V21.2H11.7V19.4L15.5 15.8C17.1 14.3 17.7 13.5 17.7 12.2C17.7 11.1 17 10.5 16 10.5C14.9 10.5 14.2 11.2 14.1 12.4H12.2V12.1Z"
+							fill="#f2ece1"
+						/>
+					</svg>
+				</span>
+				<span class="brand-text">City of Traitors</span>
+			</a>
+
+			<nav aria-label="Main navigation">
+				<a href="/" class:active={pathname === '/' || pathname.startsWith('/blog')}>
+					Chronicles
+				</a>
+				<a href="/about" class:active={pathname.startsWith('/about')}>
+					About
+				</a>
+				<a
+					href="https://seeker.cityoftraitors.com/"
+					class="external-link"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<span>Seeker</span>
+					<svg
+						class="external-icon"
+						viewBox="0 0 16 16"
+						fill="none"
+						aria-hidden="true"
+					>
+						<path
+							d="M5.5 3.5H12.5V10.5M12.25 3.75L4 12"
+							stroke="currentColor"
+							stroke-width="1.4"
+							stroke-linecap="round"
+							stroke-linejoin="round"
+						/>
+					</svg>
+				</a>
 			</nav>
 		</div>
 	</header>
@@ -17,14 +64,19 @@
 		<slot />
 	</main>
 
-	<footer>
+	<footer class="site-footer">
 		<div class="footer-content">
-			<p>
-				&copy; {new Date().getFullYear()} City of Traitors. All rights reserved.
+			<div class="footer-ornament" aria-hidden="true">
+				<span class="line"></span>
+				<span class="diamond"></span>
+				<span class="line"></span>
+			</div>
+			<p class="copyright">
+				&copy; {new Date().getFullYear()} City of Traitors &middot; Tap for two colorless.
 			</p>
 			<p class="disclaimer">
-				Magic: The Gathering is a trademark of Wizards of the Coast.
-				This site is not affiliated with Wizards of the Coast.
+				Magic: The Gathering is a trademark of Wizards of the Coast. This site is not affiliated
+				with Wizards of the Coast.
 			</p>
 		</div>
 	</footer>
@@ -37,78 +89,183 @@
 		min-height: 100vh;
 	}
 
-	header {
-		background: linear-gradient(to bottom, #2a2a2a, #1e1e1e);
-		border-bottom: 3px solid var(--color-secondary);
-		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-		padding: 1rem 0;
+	.site-header {
 		position: sticky;
 		top: 0;
 		z-index: 100;
+		background: rgba(11, 11, 13, 0.78);
+		backdrop-filter: blur(16px);
+		-webkit-backdrop-filter: blur(16px);
+		border-bottom: 1px solid var(--color-border);
 	}
 
 	.header-content {
-		max-width: 1200px;
+		max-width: var(--max-width);
 		margin: 0 auto;
-		padding: 0 2rem;
+		padding: 0.9rem 1.5rem;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		gap: 1.5rem;
 	}
 
 	.brand {
-		font-family: var(--font-header);
-		font-size: 2rem;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.75rem;
 		color: var(--color-primary);
-		text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+	}
+
+	.brand:hover {
+		color: var(--color-accent-bright);
+	}
+
+	.mana-crest {
+		width: 30px;
+		height: 30px;
+		display: inline-flex;
+		color: var(--color-accent);
+		flex-shrink: 0;
+		transition: transform 0.25s ease;
+	}
+
+	.brand:hover .mana-crest {
+		transform: rotate(-8deg) scale(1.05);
+	}
+
+	.mana-crest svg {
+		width: 100%;
+		height: 100%;
+	}
+
+	.brand-text {
+		font-family: var(--font-display);
+		font-size: 1.65rem;
+		letter-spacing: 0.02em;
+		line-height: 1;
+	}
+
+	nav {
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
 	}
 
 	nav a {
-		margin-left: 2rem;
-		font-family: var(--font-header);
-		font-size: 1.2rem;
-		text-transform: uppercase;
-		letter-spacing: 1px;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		padding: 0.45rem 0.85rem;
+		border-radius: 999px;
+		font-family: var(--font-sans);
+		font-size: 0.9rem;
+		font-weight: 500;
+		color: var(--color-text-muted);
+		border: 1px solid transparent;
+		transition:
+			color 0.2s ease,
+			background-color 0.2s ease,
+			border-color 0.2s ease;
+	}
+
+	nav a:hover {
+		color: var(--color-primary);
+		background: rgba(255, 255, 255, 0.04);
+	}
+
+	nav a.active {
+		color: var(--color-accent-bright);
+		background: var(--color-accent-dim);
+		border-color: var(--color-border);
+	}
+
+	.external-link {
+		color: var(--color-accent);
+	}
+
+	.external-icon {
+		width: 14px;
+		height: 14px;
+		opacity: 0.8;
+		transition: transform 0.2s ease;
+	}
+
+	.external-link:hover .external-icon {
+		transform: translate(1.5px, -1.5px);
+		opacity: 1;
 	}
 
 	main {
 		flex: 1;
 		width: 100%;
-		max-width: 1200px;
+		max-width: var(--max-width);
 		margin: 0 auto;
-		padding: 2rem;
-		box-sizing: border-box;
+		padding: 2.25rem 1.5rem 4rem;
 	}
 
-	footer {
-		background: #151515;
-		border-top: 1px solid #333;
-		padding: 2rem 0;
+	.site-footer {
 		margin-top: auto;
+		padding: 2.5rem 1.5rem 3rem;
 	}
 
 	.footer-content {
-		max-width: 1200px;
+		max-width: var(--max-width);
 		margin: 0 auto;
-		padding: 0 2rem;
 		text-align: center;
-		color: var(--color-secondary);
+	}
+
+	.footer-ornament {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.footer-ornament .line {
+		height: 1px;
+		width: 100%;
+		max-width: 180px;
+		background: linear-gradient(90deg, transparent, var(--color-border-strong), transparent);
+	}
+
+	.footer-ornament .diamond {
+		width: 7px;
+		height: 7px;
+		transform: rotate(45deg);
+		border: 1px solid var(--color-accent);
+		background: var(--color-bg);
+		flex-shrink: 0;
+	}
+
+	.copyright {
+		margin: 0;
+		font-size: 0.875rem;
+		color: var(--color-text-muted);
 	}
 
 	.disclaimer {
-		font-size: 0.8rem;
-		margin-top: 0.5rem;
-		opacity: 0.7;
+		font-size: 0.78rem;
+		margin: 0.45rem 0 0;
+		color: var(--color-secondary);
 	}
 
-	@media (max-width: 600px) {
+	@media (max-width: 640px) {
 		.header-content {
-			flex-direction: column;
-			gap: 1rem;
+			padding: 0.8rem 1rem;
+		}
+
+		.brand-text {
+			font-size: 1.35rem;
 		}
 
 		nav a {
-			margin: 0 1rem;
+			padding: 0.4rem 0.65rem;
+			font-size: 0.85rem;
+		}
+
+		main {
+			padding: 1.5rem 1rem 3rem;
 		}
 	}
 </style>
