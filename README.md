@@ -42,9 +42,12 @@ npm run dev
 
 ```sh
 npm run check   # Runs svelte-kit sync && svelte-check
+npm run test    # Runs CI-only automated tests (requires GITHUB_ACTIONS=true)
 npm run build   # Builds static output into cityoftraitors.com/build
 npm run preview # Previews the production build locally
 ```
+
+> **Note:** Unit and contract tests (`cityoftraitors.com/tests/site.test.mjs`) enforce `GITHUB_ACTIONS === 'true'` in `scripts/run-tests.mjs` and execute exclusively in GitHub Actions CI.
 
 ## Authoring a New Chronicle
 

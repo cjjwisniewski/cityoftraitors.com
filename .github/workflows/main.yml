@@ -3,13 +3,41 @@ name: Blob storage website CI
 on:
     push:
         branches: [ main ]
+    pull_request:
+        branches: [ main ]
 
 permissions:
   id-token: write
   contents: read
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: 20
+        cache: 'npm'
+        cache-dependency-path: cityoftraitors.com/package-lock.json
+
+    - name: Install dependencies
+      run: npm ci
+      working-directory: cityoftraitors.com
+
+    - name: Typecheck & Svelte Check
+      run: npm run check
+      working-directory: cityoftraitors.com
+
+    - name: Run automated tests
+      run: npm run test
+      working-directory: cityoftraitors.com
+
   build:
+    needs: test
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3

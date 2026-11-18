@@ -15,4 +15,4 @@ This repository contains the SvelteKit static blog for **`https://cityoftraitors
 - **Chronicles & Assets**:
   - Blog posts live in `cityoftraitors.com/src/lib/posts/*.md` with `title`, `date` (`YYYY-MM-DD`), `description`, and `author` frontmatter; author bios live in `cityoftraitors.com/src/lib/authors.js`.
   - Post images live in `cityoftraitors.com/static/assets/posts/<slug>/`.
-- **Style & Verification**: Follow `STYLE_GUIDE.md` and run `npm run check` and `npm run build` in `cityoftraitors.com/` when Node/npm is available before committing.
+- **Style & Verification**: Follow `STYLE_GUIDE.md`. `npm run check` (`svelte-check`) and `npm run test` (`scripts/run-tests.mjs`) run as pre-deploy gates in GitHub Actions. Automated tests enforce `GITHUB_ACTIONS === 'true'` and are designed for CI-only execution (do not run unit tests locally).
