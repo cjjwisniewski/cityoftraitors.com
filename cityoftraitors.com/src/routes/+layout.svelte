@@ -8,6 +8,7 @@
 
 	$: pathname = $page.url.pathname;
 
+	/** @param {MouseEvent} event */
 	function openDiscordModal(event) {
 		event.preventDefault();
 		showDiscordModal = true;
@@ -17,6 +18,7 @@
 		showDiscordModal = false;
 	}
 
+	/** @param {KeyboardEvent} event */
 	function handleWindowKeydown(event) {
 		if (event.key === 'Escape' && showDiscordModal) {
 			closeDiscordModal();
@@ -140,6 +142,7 @@
 		role="dialog"
 		aria-modal="true"
 		aria-labelledby="cot-discord-title"
+		tabindex="-1"
 		on:click={(e) => {
 			if (e.target === e.currentTarget) closeDiscordModal();
 		}}

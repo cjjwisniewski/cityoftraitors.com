@@ -1,8 +1,10 @@
 <script>
 	import { formatPostDate } from '$lib/utils/format.js';
 
+	/** @type {{ posts: Array<{ path: string; readingTime?: number; meta: { title: string; date: string; description?: string; tags?: string[] } }> }} */
 	export let data;
 
+	/** @type {string | null} */
 	let selectedTag = null;
 
 	$: latestPost = data.posts?.[0] ?? null;
