@@ -1,7 +1,7 @@
 <script>
 	import { formatPostDate } from '$lib/utils/format.js';
 
-	/** @type {{ posts: Array<{ path: string; readingTime?: number; meta: { title: string; date: string; description?: string; tags?: string[] } }> }} */
+	/** @type {{ posts: Array<{ path: string; readingTime?: number; meta: { title: string; date: string; description?: string; author?: string; tags?: string[] } }> }} */
 	export let data;
 
 	/** @type {string | null} */
@@ -12,7 +12,9 @@
 		new Set((data.posts ?? []).flatMap((post) => post.meta?.tags ?? []))
 	);
 	$: filteredPosts = selectedTag
-		? (data.posts ?? []).filter((post) => (post.meta?.tags ?? []).includes(selectedTag))
+		? (data.posts ?? []).filter((post) =>
+				(post.meta?.tags ?? []).includes(/** @type {string} */ (selectedTag))
+			)
 		: data.posts ?? [];
 </script>
 
