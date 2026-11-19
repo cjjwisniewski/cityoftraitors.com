@@ -27,21 +27,52 @@
 	onMount(() => {
 		updateScrollProgress();
 	});
+	$: canonicalUrl = `https://cityoftraitors.com/blog/${data.slug}/`;
+	$: structuredDataTag = `<script type="application/ld+json">${JSON.stringify({
+		'@context': 'https://schema.org',
+		'@type': 'BlogPosting',
+		headline: data.title,
+		description: data.description || undefined,
+		datePublished: data.date || undefined,
+		url: canonicalUrl,
+		mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
+		image: 'https://cityoftraitors.com/assets/city_of_traitors.png',
+		author: authorInfo
+			? { '@type': 'Person', name: authorInfo.name }
+			: { '@type': 'Organization', name: 'City of Traitors' },
+		publisher: {
+			'@type': 'Organization',
+			name: 'City of Traitors',
+			url: 'https://cityoftraitors.com/'
+		}
+	})}<\/script>`;
 </script>
 
 <svelte:window on:scroll={updateScrollProgress} on:resize={updateScrollProgress} />
 
 <svelte:head>
 	<title>{data.title} - City of Traitors</title>
+	<link rel="canonical" href={canonicalUrl} />
 	{#if data.description}
 		<meta name="description" content={data.description} />
 		<meta property="og:description" content={data.description} />
+		<meta name="twitter:description" content={data.description} />
 	{/if}
 	<meta property="og:title" content={`${data.title} - City of Traitors`} />
 	<meta property="og:type" content="article" />
+	<meta property="og:url" content={canonicalUrl} />
+	<meta property="og:site_name" content="City of Traitors" />
+	{#if data.date}
+		<meta property="article:published_time" content={data.date} />
+	{/if}
+	{#if authorInfo}
+		<meta property="article:author" content={authorInfo.name} />
+	{/if}
 	<meta property="og:image" content="https://cityoftraitors.com/assets/city_of_traitors.png" />
 	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content={`${data.title} - City of Traitors`} />
 	<meta name="twitter:image" content="https://cityoftraitors.com/assets/city_of_traitors.png" />
+	{@html structuredDataTag}
 </svelte:head>
 
 <div class="progress-track" aria-hidden="true">

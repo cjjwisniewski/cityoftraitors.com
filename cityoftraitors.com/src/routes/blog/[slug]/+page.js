@@ -34,6 +34,7 @@ export const load = async ({ params }) => {
 	const content = post.default;
 
 	return {
+		slug: params.slug,
 		content,
 		title,
 		date,

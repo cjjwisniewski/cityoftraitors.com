@@ -4,6 +4,7 @@
 
 <svelte:head>
 	<title>{$page.status} - City of Traitors</title>
+	<meta name="robots" content="noindex" />
 </svelte:head>
 
 <section class="error-card">

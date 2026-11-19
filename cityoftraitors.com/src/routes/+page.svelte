@@ -16,14 +16,36 @@
 				(post.meta?.tags ?? []).includes(/** @type {string} */ (selectedTag))
 			)
 		: data.posts ?? [];
+	const structuredDataTag = `<script type="application/ld+json">${JSON.stringify({
+		'@context': 'https://schema.org',
+		'@graph': [
+			{
+				'@type': 'WebSite',
+				'@id': 'https://cityoftraitors.com/#website',
+				url: 'https://cityoftraitors.com/',
+				name: 'City of Traitors',
+				description:
+					'A Magic: The Gathering blog focusing on old-frame formats, Premodern, Legacy deck lists, and tournament reports.'
+			},
+			{
+				'@type': 'Blog',
+				'@id': 'https://cityoftraitors.com/#blog',
+				url: 'https://cityoftraitors.com/',
+				name: 'City of Traitors',
+				image: 'https://cityoftraitors.com/assets/city_of_traitors.png'
+			}
+		]
+	})}<\/script>`;
 </script>
 
 <svelte:head>
 	<title>City of Traitors</title>
+	<link rel="canonical" href="https://cityoftraitors.com/" />
 	<meta
 		name="description"
 		content="A Magic: The Gathering blog focusing on old-frame formats, Premodern, Legacy deck lists, and tournament reports."
 	/>
+	<meta property="og:site_name" content="City of Traitors" />
 	<meta property="og:title" content="City of Traitors" />
 	<meta
 		property="og:description"
@@ -33,7 +55,13 @@
 	<meta property="og:url" content="https://cityoftraitors.com/" />
 	<meta property="og:image" content="https://cityoftraitors.com/assets/city_of_traitors.png" />
 	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="City of Traitors" />
+	<meta
+		name="twitter:description"
+		content="Tournament reports, rogue brews, and dispatches from the home for all things that tap for two colorless mana."
+	/>
 	<meta name="twitter:image" content="https://cityoftraitors.com/assets/city_of_traitors.png" />
+	{@html structuredDataTag}
 </svelte:head>
 
 <section class="hero">

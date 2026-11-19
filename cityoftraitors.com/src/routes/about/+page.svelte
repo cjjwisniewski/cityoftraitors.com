@@ -1,9 +1,26 @@
 <svelte:head>
 	<title>About - City of Traitors</title>
+	<link rel="canonical" href="https://cityoftraitors.com/about/" />
 	<meta
 		name="description"
 		content="About City of Traitors, an old-frame Magic: The Gathering blog and home of Seeker."
 	/>
+	<meta property="og:site_name" content="City of Traitors" />
+	<meta property="og:type" content="website" />
+	<meta property="og:title" content="About - City of Traitors" />
+	<meta
+		property="og:description"
+		content="About City of Traitors, an old-frame Magic: The Gathering blog and home of Seeker."
+	/>
+	<meta property="og:url" content="https://cityoftraitors.com/about/" />
+	<meta property="og:image" content="https://cityoftraitors.com/assets/city_of_traitors.png" />
+	<meta name="twitter:card" content="summary_large_image" />
+	<meta name="twitter:title" content="About - City of Traitors" />
+	<meta
+		name="twitter:description"
+		content="About City of Traitors, an old-frame Magic: The Gathering blog and home of Seeker."
+	/>
+	<meta name="twitter:image" content="https://cityoftraitors.com/assets/city_of_traitors.png" />
 </svelte:head>
 
 <div class="about-layout">
