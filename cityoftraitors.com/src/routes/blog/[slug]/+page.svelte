@@ -36,7 +36,7 @@
 		datePublished: data.date || undefined,
 		url: canonicalUrl,
 		mainEntityOfPage: { '@type': 'WebPage', '@id': canonicalUrl },
-		image: 'https://cityoftraitors.com/assets/city_of_traitors.png',
+		image: 'https://cityoftraitors.com/assets/og-card.jpg',
 		author: authorInfo
 			? { '@type': 'Person', name: authorInfo.name }
 			: { '@type': 'Organization', name: 'City of Traitors' },
@@ -68,10 +68,10 @@
 	{#if authorInfo}
 		<meta property="article:author" content={authorInfo.name} />
 	{/if}
-	<meta property="og:image" content="https://cityoftraitors.com/assets/city_of_traitors.png" />
+	<meta property="og:image" content="https://cityoftraitors.com/assets/og-card.jpg" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content={`${data.title} - City of Traitors`} />
-	<meta name="twitter:image" content="https://cityoftraitors.com/assets/city_of_traitors.png" />
+	<meta name="twitter:image" content="https://cityoftraitors.com/assets/og-card.jpg" />
 	{@html structuredDataTag}
 </svelte:head>
 

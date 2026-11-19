@@ -32,7 +32,7 @@
 				'@id': 'https://cityoftraitors.com/#blog',
 				url: 'https://cityoftraitors.com/',
 				name: 'City of Traitors',
-				image: 'https://cityoftraitors.com/assets/city_of_traitors.png'
+				image: 'https://cityoftraitors.com/assets/og-card.jpg'
 			}
 		]
 	})}<\/script>`;
@@ -53,14 +53,16 @@
 	/>
 	<meta property="og:type" content="website" />
 	<meta property="og:url" content="https://cityoftraitors.com/" />
-	<meta property="og:image" content="https://cityoftraitors.com/assets/city_of_traitors.png" />
+	<meta property="og:image" content="https://cityoftraitors.com/assets/og-card.jpg" />
+	<meta property="og:image:width" content="1200" />
+	<meta property="og:image:height" content="630" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="City of Traitors" />
 	<meta
 		name="twitter:description"
 		content="Tournament reports, rogue brews, and dispatches from the home for all things that tap for two colorless mana."
 	/>
-	<meta name="twitter:image" content="https://cityoftraitors.com/assets/city_of_traitors.png" />
+	<meta name="twitter:image" content="https://cityoftraitors.com/assets/og-card.jpg" />
 	{@html structuredDataTag}
 </svelte:head>
 
@@ -193,7 +195,7 @@
 		background-image:
 			radial-gradient(circle at 50% 42%, rgba(11, 11, 13, 0.35) 0%, rgba(11, 11, 13, 0.88) 78%),
 			linear-gradient(180deg, rgba(11, 11, 13, 0.45) 0%, rgba(11, 11, 13, 0.92) 100%),
-			url('/assets/city_of_traitors.png');
+			url('/assets/city_of_traitors.webp');
 		background-size: cover;
 		background-position: center 38%;
 		transform: scale(1.03);

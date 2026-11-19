@@ -13,14 +13,14 @@
 		content="About City of Traitors, an old-frame Magic: The Gathering blog and home of Seeker."
 	/>
 	<meta property="og:url" content="https://cityoftraitors.com/about/" />
-	<meta property="og:image" content="https://cityoftraitors.com/assets/city_of_traitors.png" />
+	<meta property="og:image" content="https://cityoftraitors.com/assets/og-card.jpg" />
 	<meta name="twitter:card" content="summary_large_image" />
 	<meta name="twitter:title" content="About - City of Traitors" />
 	<meta
 		name="twitter:description"
 		content="About City of Traitors, an old-frame Magic: The Gathering blog and home of Seeker."
 	/>
-	<meta name="twitter:image" content="https://cityoftraitors.com/assets/city_of_traitors.png" />
+	<meta name="twitter:image" content="https://cityoftraitors.com/assets/og-card.jpg" />
 </svelte:head>
 
 <div class="about-layout">
