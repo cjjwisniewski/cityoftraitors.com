@@ -1,6 +1,10 @@
 <script>
 	import { page } from '$app/stores';
 	import favicon from '$lib/assets/favicon.svg';
+	import '@fontsource-variable/inter';
+	import '@fontsource-variable/jetbrains-mono';
+	import '@fontsource-variable/newsreader/opsz.css';
+	import '@fontsource-variable/newsreader/opsz-italic.css';
 	import '../app.css';
 
 	const DISCORD_INVITE_URL = 'https://discord.gg/a5Kyrfekxd';
