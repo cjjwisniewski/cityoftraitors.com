@@ -129,7 +129,7 @@
 				<span aria-hidden="true">&middot;</span>
 				<a href="https://pittimps.com" target="_blank" rel="noopener noreferrer">Pitt Imps</a>
 				<span aria-hidden="true">&middot;</span>
-				<a href="https://undo.is" target="_blank" rel="noopener noreferrer">undo.is</a>
+				<a href="https://www.undo.is/" target="_blank" rel="noopener noreferrer">undo.is</a>
 			</p>
 			<p class="disclaimer">
 				Magic: The Gathering is a trademark of Wizards of the Coast. This site is not affiliated
