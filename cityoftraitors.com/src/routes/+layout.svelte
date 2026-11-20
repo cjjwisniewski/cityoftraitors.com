@@ -1,4 +1,5 @@
 <script>
+	import { tick } from 'svelte';
 	import { page } from '$app/stores';
 	import favicon from '$lib/assets/favicon.svg';
 	import '@fontsource-variable/inter';
@@ -9,23 +10,56 @@
 
 	const DISCORD_INVITE_URL = 'https://discord.gg/a5Kyrfekxd';
 	let showDiscordModal = false;
+	/** @type {HTMLDivElement | null} */
+	let discordModalEl = null;
+	/** @type {HTMLElement | null} */
+	let lastFocusedEl = null;
 
 	$: pathname = $page.url.pathname;
 
 	/** @param {MouseEvent} event */
-	function openDiscordModal(event) {
+	async function openDiscordModal(event) {
 		event.preventDefault();
+		lastFocusedEl = /** @type {HTMLElement | null} */ (
+			event.currentTarget instanceof HTMLElement ? event.currentTarget : document.activeElement
+		);
 		showDiscordModal = true;
+		document.body.style.overflow = 'hidden';
+		await tick();
+		const primaryBtn = discordModalEl?.querySelector('a[href], button');
+		if (primaryBtn instanceof HTMLElement) {
+			primaryBtn.focus();
+		}
 	}
 
 	function closeDiscordModal() {
 		showDiscordModal = false;
+		document.body.style.overflow = '';
+		lastFocusedEl?.focus();
+		lastFocusedEl = null;
 	}
 
 	/** @param {KeyboardEvent} event */
 	function handleWindowKeydown(event) {
-		if (event.key === 'Escape' && showDiscordModal) {
+		if (!showDiscordModal) return;
+		if (event.key === 'Escape') {
 			closeDiscordModal();
+			return;
+		}
+		if (event.key === 'Tab' && discordModalEl) {
+			const focusables = Array.from(
+				discordModalEl.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])')
+			).filter((el) => el instanceof HTMLElement);
+			if (focusables.length === 0) return;
+			const first = focusables[0];
+			const last = focusables[focusables.length - 1];
+			if (event.shiftKey && document.activeElement === first) {
+				event.preventDefault();
+				last.focus();
+			} else if (!event.shiftKey && document.activeElement === last) {
+				event.preventDefault();
+				first.focus();
+			}
 		}
 	}
 </script>
@@ -36,6 +70,8 @@
 	<link rel="icon" type="image/svg+xml" href={favicon} />
 	<link rel="alternate" type="application/rss+xml" title="City of Traitors RSS" href="/rss.xml" />
 </svelte:head>
+
+<a href="#main-content" class="skip-link">Skip to main content</a>
 
 <div class="app-container">
 	<header class="site-header">
@@ -62,10 +98,18 @@
 			</a>
 
 			<nav aria-label="Main navigation">
-				<a href="/" class:active={pathname === '/' || pathname.startsWith('/blog')}>
+				<a
+					href="/"
+					class:active={pathname === '/' || pathname.startsWith('/blog')}
+					aria-current={pathname === '/' ? 'page' : undefined}
+				>
 					Chronicles
 				</a>
-				<a href="/about" class:active={pathname.startsWith('/about')}>
+				<a
+					href="/about"
+					class:active={pathname.startsWith('/about')}
+					aria-current={pathname.startsWith('/about') ? 'page' : undefined}
+				>
 					About
 				</a>
 				<a
@@ -103,7 +147,7 @@
 		</div>
 	</header>
 
-	<main>
+	<main id="main-content" tabindex="-1">
 		<slot />
 	</main>
 
@@ -142,6 +186,7 @@
 {#if showDiscordModal}
 	<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
 	<div
+		bind:this={discordModalEl}
 		class="modal-backdrop"
 		role="dialog"
 		aria-modal="true"

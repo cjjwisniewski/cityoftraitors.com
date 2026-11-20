@@ -1,11 +1,18 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onMount, tick } from 'svelte';
 	import { authors } from '$lib/authors.js';
 	import { formatPostDate } from '$lib/utils/format.js';
 
 	export let data;
 
 	let scrollProgress = 0;
+	let copiedLink = false;
+	/** @type {{ src: string; alt: string } | null} */
+	let lightboxImage = null;
+	/** @type {HTMLButtonElement | null} */
+	let lightboxCloseBtn = null;
+	/** @type {HTMLElement | null} */
+	let lastFocusedImage = null;
 
 	$: authorInfo = data.author ? authors[data.author] : null;
 	$: authorInitials = authorInfo
@@ -22,6 +29,46 @@
 		const scrollTop = window.scrollY || doc.scrollTop;
 		const maxScroll = doc.scrollHeight - doc.clientHeight;
 		scrollProgress = maxScroll > 0 ? Math.min(100, Math.max(0, (scrollTop / maxScroll) * 100)) : 0;
+	}
+
+	async function copyPostLink() {
+		try {
+			await navigator.clipboard.writeText(canonicalUrl);
+			copiedLink = true;
+			setTimeout(() => {
+				copiedLink = false;
+			}, 2000);
+		} catch {
+			// Fallback ignored if clipboard is unavailable
+		}
+	}
+
+	/** @param {MouseEvent} event */
+	async function handleContentClick(event) {
+		if (event.target instanceof HTMLImageElement && event.target.src) {
+			lastFocusedImage = event.target;
+			lightboxImage = {
+				src: event.target.currentSrc || event.target.src,
+				alt: event.target.alt || data.title
+			};
+			document.body.style.overflow = 'hidden';
+			await tick();
+			lightboxCloseBtn?.focus();
+		}
+	}
+
+	function closeLightbox() {
+		lightboxImage = null;
+		document.body.style.overflow = '';
+		lastFocusedImage?.focus();
+		lastFocusedImage = null;
+	}
+
+	/** @param {KeyboardEvent} event */
+	function handleKeydown(event) {
+		if (event.key === 'Escape' && lightboxImage) {
+			closeLightbox();
+		}
 	}
 
 	onMount(() => {
@@ -48,7 +95,7 @@
 	})}<\/script>`;
 </script>
 
-<svelte:window on:scroll={updateScrollProgress} on:resize={updateScrollProgress} />
+<svelte:window on:scroll={updateScrollProgress} on:resize={updateScrollProgress} on:keydown={handleKeydown} />
 
 <svelte:head>
 	<title>{data.title} - City of Traitors</title>
@@ -95,6 +142,14 @@
 				<span class="dot" aria-hidden="true">&middot;</span>
 				<span class="author">By {data.author}</span>
 			{/if}
+			<button
+				type="button"
+				class="copy-link-btn"
+				on:click={copyPostLink}
+				aria-live="polite"
+			>
+				{copiedLink ? 'Link copied' : 'Copy link'}
+			</button>
 		</div>
 		<h1>{data.title}</h1>
 		{#if data.description}
@@ -109,7 +164,8 @@
 		{/if}
 	</header>
 
-	<div class="content">
+	<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-static-element-interactions -->
+	<div class="content" on:click={handleContentClick}>
 		<svelte:component this={data.content} />
 	</div>
 
@@ -132,6 +188,36 @@
 		<a href="/">&larr; Return to all Chronicles</a>
 	</div>
 </article>
+
+{#if lightboxImage}
+	<!-- svelte-ignore a11y-click-events-have-key-events a11y-no-noninteractive-element-interactions -->
+	<div
+		class="lightbox-backdrop"
+		role="dialog"
+		aria-modal="true"
+		aria-label="Expanded image preview"
+		tabindex="-1"
+		on:click={(e) => {
+			if (e.target === e.currentTarget) closeLightbox();
+		}}
+	>
+		<button
+			bind:this={lightboxCloseBtn}
+			type="button"
+			class="lightbox-close"
+			aria-label="Close image preview"
+			on:click={closeLightbox}
+		>
+			&times;
+		</button>
+		<figure class="lightbox-figure">
+			<img src={lightboxImage.src} alt={lightboxImage.alt} />
+			{#if lightboxImage.alt}
+				<figcaption>{lightboxImage.alt}</figcaption>
+			{/if}
+		</figure>
+	</div>
+{/if}
 
 <style>
 	.progress-track {
@@ -202,6 +288,29 @@
 
 	.meta .author {
 		color: var(--color-text-muted);
+	}
+
+	.copy-link-btn {
+		margin-left: auto;
+		font-family: var(--font-mono);
+		font-size: 0.74rem;
+		letter-spacing: 0.03em;
+		color: var(--color-text-muted);
+		background: transparent;
+		border: 1px solid var(--color-border);
+		border-radius: 999px;
+		padding: 0.2rem 0.65rem;
+		cursor: pointer;
+		transition:
+			color 0.2s ease,
+			border-color 0.2s ease,
+			background-color 0.2s ease;
+	}
+
+	.copy-link-btn:hover {
+		color: var(--color-accent-bright);
+		border-color: var(--color-border-strong);
+		background: var(--color-accent-dim);
 	}
 
 	h1 {
@@ -343,6 +452,70 @@
 		border-radius: var(--radius-md);
 		border: 1px solid var(--color-border);
 		box-shadow: 0 18px 40px -16px rgba(0, 0, 0, 0.85);
+		cursor: zoom-in;
+	}
+
+	.lightbox-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 300;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1.5rem;
+		background: rgba(6, 6, 8, 0.9);
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+	}
+
+	.lightbox-close {
+		position: fixed;
+		top: 1rem;
+		right: 1rem;
+		width: 42px;
+		height: 42px;
+		border-radius: 50%;
+		border: 1px solid var(--color-border-strong);
+		background: rgba(22, 22, 27, 0.92);
+		color: var(--color-primary);
+		font-size: 1.6rem;
+		line-height: 1;
+		cursor: pointer;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.lightbox-close:hover {
+		color: var(--color-accent-bright);
+		border-color: var(--color-accent);
+	}
+
+	.lightbox-figure {
+		margin: 0;
+		max-width: min(1100px, 94vw);
+		max-height: 90vh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.lightbox-figure img {
+		max-width: 100%;
+		max-height: 82vh;
+		width: auto;
+		height: auto;
+		border-radius: var(--radius-md);
+		border: 1px solid var(--color-border-strong);
+		box-shadow: 0 24px 60px rgba(0, 0, 0, 0.85);
+	}
+
+	.lightbox-figure figcaption {
+		font-family: var(--font-mono);
+		font-size: 0.8rem;
+		color: var(--color-text-muted);
+		text-align: center;
 	}
 
 	.post-footer {

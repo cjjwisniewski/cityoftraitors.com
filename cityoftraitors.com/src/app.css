@@ -126,6 +126,39 @@ button:focus-visible {
 	border-radius: 4px;
 }
 
+.skip-link {
+	position: fixed;
+	top: -100%;
+	left: 1rem;
+	z-index: 500;
+	padding: 0.6rem 1rem;
+	background: var(--color-accent);
+	color: var(--color-bg);
+	font-weight: 600;
+	font-size: 0.9rem;
+	border-radius: var(--radius-sm);
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.55);
+}
+
+.skip-link:focus {
+	top: 1rem;
+	color: var(--color-bg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
+	*,
+	*::before,
+	*::after {
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
+	}
+}
+
 /* Scrollbar */
 ::-webkit-scrollbar {
 	width: 10px;
