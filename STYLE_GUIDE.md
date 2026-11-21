@@ -34,8 +34,8 @@ Defined in `cityoftraitors.com/src/app.css`:
 | `--color-border-strong` | `rgba(201, 166, 107, 0.42)` | Card hover borders and active outlines |
 | `--color-border-subtle` | `rgba(255, 255, 255, 0.07)` | Resting card borders and section rules |
 
-### Ambient Lighting & Pattern
-The `body` background layers two soft radial gradients over `#0b0b0d` (warm gold glow at `50% -10%` and subtle amber at `85% 20%`), paired with a `64px x 64px` *Exodus* nested-diamond lattice in `body::before` (`z-index: 0`, with `.app-container` at `z-index: 1`) masked with a radial vignette.
+### Ambient Lighting
+The `body` background layers two soft radial gradients over `#0b0b0d` (warm gold glow at `50% -10%` and subtle amber at `85% 20%`).
 
 ---
 
@@ -63,7 +63,7 @@ The `body` background layers two soft radial gradients over `#0b0b0d` (warm gold
   - `--radius-sm`: `6px` (buttons, inline code)
   - `--radius-md`: `12px` (post cards, author box, Seeker callout, images)
   - `--radius-lg`: `18px` (hero showcase, main article container, error card)
-- **Card Elevation**: Subtle top-down surface gradient (`var(--color-surface)` to `#121216`/`#131318`), `1px` subtle border, and an `inset 0 1px 0 rgba(255, 255, 255, 0.04)` top highlight. Hovering lifts cards by `-2px` and brightens the border to `--color-border-strong`.
+- **Card Elevation**: Flat `--color-surface` fill with `1px` subtle border. Hovering shifts to `--color-surface-hover` and brightens the border to `--color-border-strong`.
 
 ---
 
@@ -71,7 +71,7 @@ The `body` background layers two soft radial gradients over `#0b0b0d` (warm gold
 
 - **Brand Crest & Favicon (Nested Diamond Motif)**: Both the header `.brand-crest` and `favicon.svg` use the signature nested burnished-gold diamond emblem (`#16161b` fill, `#c9a66b` outer/inner strokes, and a `#f2ece1` ivory center point). This diamond geometry is echoed in the footer divider ornament and the Seeker card header (`.seeker-mark`).
 - **Sticky Header**: Frosted obsidian (`rgba(11, 11, 13, 0.78)` + `backdrop-filter: blur(16px)`), `1px` gold hairline bottom border, and pill-shaped nav items with active state highlighting.
-- **Hero Showcase**: Uses `/assets/city_of_traitors.png` behind a multi-stop radial/linear vignette, framed by an inset hairline border with corner-bracket accents (`.corner`).
+- **Hero Showcase**: Uses `/assets/city_of_traitors.png` behind a multi-stop radial/linear vignette, framed by a clean inset hairline border (`.hero-frame`).
 - **Buttons**:
   - `.btn-primary`: Solid `--color-accent` background with `#110f0b` dark ink text.
   - `.btn-secondary`: Translucent dark surface (`rgba(18, 18, 22, 0.78)`) with `--color-border-strong` outline.

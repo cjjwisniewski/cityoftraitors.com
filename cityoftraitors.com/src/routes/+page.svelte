@@ -68,12 +68,7 @@
 
 <section class="hero">
 	<div class="hero-backdrop" aria-hidden="true"></div>
-	<div class="hero-frame" aria-hidden="true">
-		<span class="corner tl"></span>
-		<span class="corner tr"></span>
-		<span class="corner bl"></span>
-		<span class="corner br"></span>
-	</div>
+	<div class="hero-frame" aria-hidden="true"></div>
 
 	<div class="hero-content">
 		<h1>City of Traitors</h1>
@@ -208,40 +203,6 @@
 		border: 1px solid rgba(201, 166, 107, 0.16);
 		border-radius: calc(var(--radius-lg) - 6px);
 		pointer-events: none;
-	}
-
-	.corner {
-		position: absolute;
-		width: 12px;
-		height: 12px;
-		border-color: var(--color-accent);
-		border-style: solid;
-		opacity: 0.65;
-	}
-
-	.corner.tl {
-		top: -1px;
-		left: -1px;
-		border-width: 2px 0 0 2px;
-		border-top-left-radius: 6px;
-	}
-	.corner.tr {
-		top: -1px;
-		right: -1px;
-		border-width: 2px 2px 0 0;
-		border-top-right-radius: 6px;
-	}
-	.corner.bl {
-		bottom: -1px;
-		left: -1px;
-		border-width: 0 0 2px 2px;
-		border-bottom-left-radius: 6px;
-	}
-	.corner.br {
-		bottom: -1px;
-		right: -1px;
-		border-width: 0 2px 2px 0;
-		border-bottom-right-radius: 6px;
 	}
 
 	.hero-content {
@@ -416,25 +377,17 @@
 	}
 
 	.post-card {
-		background: linear-gradient(180deg, var(--color-surface) 0%, #131318 100%);
+		background: var(--color-surface);
 		border: 1px solid var(--color-border-subtle);
 		border-radius: var(--radius-md);
-		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
 		transition:
-			transform 0.22s ease,
-			border-color 0.22s ease,
-			box-shadow 0.22s ease,
-			background 0.22s ease;
+			border-color 0.2s ease,
+			background-color 0.2s ease;
 	}
 
 	.post-card:hover {
-		transform: translateY(-2px);
 		border-color: var(--color-border-strong);
-		background: linear-gradient(180deg, var(--color-surface-hover) 0%, #16161c 100%);
-		box-shadow:
-			0 18px 40px -20px rgba(0, 0, 0, 0.8),
-			0 0 0 1px rgba(201, 166, 107, 0.14),
-			inset 0 1px 0 rgba(255, 255, 255, 0.06);
+		background: var(--color-surface-hover);
 	}
 
 	.post-link {
