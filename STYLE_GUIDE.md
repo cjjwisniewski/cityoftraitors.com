@@ -34,8 +34,8 @@ Defined in `cityoftraitors.com/src/app.css`:
 | `--color-border-strong` | `rgba(201, 166, 107, 0.42)` | Card hover borders and active outlines |
 | `--color-border-subtle` | `rgba(255, 255, 255, 0.07)` | Resting card borders and section rules |
 
-### Ambient Lighting
-The `body` background layers two soft radial gradients over `#0b0b0d` (warm gold glow at `50% -10%` and subtle amber at `85% 20%`).
+### Ambient Lighting & Pattern
+The `body` background layers two soft radial gradients over `#0b0b0d` (warm gold glow at `50% -10%` and subtle amber at `85% 20%`), paired with a `64px x 64px` *Exodus* nested-diamond lattice in `body::before` (`z-index: 0`, with `.app-container` at `z-index: 1`) masked with a radial vignette.
 
 ---
 
